@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>移動中…</title>
+<script>
+  // ★ 旧URL（app.html）を、新しいルートに変換して移動する。配布済みのブックマーク・共有リンク・QR・ホーム画面のアイコン用。
+  //   ?authdebug=1 などの、検索パラメータは、そのまま引き継ぐ。
+  //     app.html            → #/            （ホーム。#/books に置き換わる）
+  //     app.html#books      → #/books
+  //     app.html#cards      → #/cards
+  //     app.html#<ID>       → #/open/<ID>   （共有リンク。IDが問題集か暗記カードかは、アプリが調べて、#/books/<ID> か #/cards/<ID> に移す）
+  var hash = location.hash.replace(/^#/, '');
+  var dest = '#/';
+  if (hash === 'books' || hash === 'cards') {
+    dest = '#/' + hash;
+  } else if (hash !== '') {
+    var id = hash;
+    try { id = decodeURIComponent(hash); } catch (e) { /* そのまま使う */ }
+    dest = '#/open/' + encodeURIComponent(id);
+  }
+  location.replace('./index.html' + location.search + dest);
+</script>
+</head>
+<body>移動中…</body>
+</html>
